@@ -13,6 +13,7 @@ var Shell = function(pImage){
     this.image = pImage;
     this.phaseX = 0;
     this.phaseY = 0;
+    this.setEventListeners();
 };
 
 var increment = 0.3;

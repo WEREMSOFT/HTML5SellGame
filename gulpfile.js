@@ -3,7 +3,8 @@ var gulp = require('gulp'),
     browserify = require('gulp-browserify'),
     watch = require('watch'),
     browserSync = require('browser-sync'),
-    reload = browserSync.reload;
+    reload = browserSync.reload,
+    eslint = require('gulp-eslint');
 
 gulp.task('html', function(){
     gulp.src('./app/*.html')
@@ -31,6 +32,14 @@ gulp.task('watch', function(){
     gulp.watch('./app/**/*.*', ['html', 'scripts', 'images']);
 });
 
+gulp.task('lint', () => {
+    return gulp.src(['./app/js/**/*.js','!node_modules/**'])
+        .pipe(eslint())
+        .pipe(eslint.format())
+        .pipe(eslint.failAfterError());
+});
+
+
 gulp.task('browser-sync', function(){
     browserSync({
        server:{
@@ -39,4 +48,4 @@ gulp.task('browser-sync', function(){
     });
 });
 
-gulp.task('default', ['html', 'scripts', 'images', 'browser-sync','watch']);
+gulp.task('default', ['html', 'lint', 'scripts', 'images', 'browser-sync','watch']);

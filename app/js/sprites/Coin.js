@@ -13,6 +13,7 @@ var Coin = function(pImage){
     this.image = pImage;
     this.phaseX = 0;
     this.phaseY = 0;
+    this.setEventListeners();
 };
 
 var increment = 0.3;
@@ -24,7 +25,7 @@ Coin.prototype.update = function(){
     this.phaseY += increment;
     this.x = Math.sin(this.phaseX) * 100 + this.originalX;
     this.y = Math.cos(this.phaseY) * 100 + this.originalY;
-    console.log(this.phaseX + "#" + this.phaseY);
+    console.log(this.phaseX + '#' + this.phaseY);
 };
 
 
