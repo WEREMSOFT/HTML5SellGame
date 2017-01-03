@@ -1,0 +1,23 @@
+{
+  "name": "shell_game_html5_canvas",
+  "version": "1.0.0",
+  "description": "HTML 5 Game",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "browser-sync": "^2.18.5",
+    "bulk-require": "^1.0.0",
+    "bulkify": "^1.4.2",
+    "gulp": "^3.9.1",
+    "gulp-browserify": "^0.5.1",
+    "gulp-uglify": "^2.0.0",
+    "watch": "^1.0.1"
+  },
+  "devDependencies": {
+    "gulp-browserify": "^0.5.1"
+  }
+}
