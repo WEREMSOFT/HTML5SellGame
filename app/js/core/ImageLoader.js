@@ -27,6 +27,4 @@ var ImageLoader = {
     }
 };
 
-
-
 module.exports = ImageLoader;

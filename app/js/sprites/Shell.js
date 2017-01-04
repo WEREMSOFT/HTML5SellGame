@@ -26,6 +26,4 @@ Utils.extends(Shell, Sprite);
 
 Shell.prototype.childs = [];
 
-
-
 module.exports = Shell;

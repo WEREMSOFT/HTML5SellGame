@@ -23,6 +23,4 @@ function main(imageResources){
     canvas.startMainLoop();
 }
 
-
-
 init();

@@ -57,8 +57,4 @@ Container.prototype.processChilds = function(pCallBack){
 Container.prototype.onAddedToParent = function(e){
 };
 
-
-
-
-
 module.exports = Container;

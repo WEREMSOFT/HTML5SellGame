@@ -24,7 +24,4 @@ Utils.extends(Coin, Sprite);
 
 Coin.prototype.childs = [];
 
-
-
-
 module.exports = Coin;
