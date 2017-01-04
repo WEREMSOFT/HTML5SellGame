@@ -1,7 +1,7 @@
 /**
  * Created by pabloweremczuk on 1/3/17.
  */
-var EventDispatcher = require('./EventDispatcher');
+var Container = require('./Container');
 var Utils = require('./Utils');
 
 var Tween = function (pObject, pPropertyName, pEndValue) {
@@ -10,11 +10,22 @@ var Tween = function (pObject, pPropertyName, pEndValue) {
     this.endValue = pEndValue;
 };
 
-Utils.extends(Tween, EventDispatcher);
+Utils.extends(Tween, Container);
+
+Tween.prototype.childs = [];
 
 Tween.prototype.update = function(){
-    this.objectToTween[this.propertyName] = this.endValue;
-    this.dispatchEvent(new Event('TweenEnded'));
+    var increment = (this.endValue - this.objectToTween[this.propertyName]);
+    this.objectToTween[this.propertyName] +=  increment / 3;
+    if(Math.abs(this.objectToTween[this.propertyName] - this.endValue) < 1){
+        this.objectToTween[this.propertyName] = this.endValue;
+        var event = new Event('TweenEnded');
+        console.log('tween ended');
+        console.log(this.objectToTween);
+        console.log(this.endValue);
+        this.parent.removeChild(this);
+        this.dispatchEvent(event);
+    }
 };
 
 

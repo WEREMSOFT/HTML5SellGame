@@ -21,9 +21,4 @@ Utils.extends(Sprite, Container);
 
 Sprite.prototype.visible = true;
 
-Sprite.prototype.draw = function () {
-
-};
-
-
 module.exports = Sprite;

@@ -71,8 +71,8 @@ Object.assign( EventDispatcher.prototype, {
         var listenerArray = listeners[ event.type ];
 
         if ( listenerArray !== undefined ) {
-
-            event.target = this;
+            // Target is a const, so we use customTarget instead
+            event.customTarget = this;
 
             var array = [], i = 0;
             var length = listenerArray.length;

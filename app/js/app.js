@@ -6,7 +6,7 @@ var Game = require('./gameElements/Game');
 // Resource Loading routine, trigers even before Main.
 // The idea is to start the game routines after all the resources are ready.
 function init(){
-    var images = {coin : './assets/images/coin.png', shell: './assets/images/shell.png'};
+    var images = {coin : './assets/images/coin.png', shell: './assets/images/shell.png', shell1: './assets/images/shell1.png', shell2: './assets/images/shell2.png', shell3: './assets/images/shell3.png'};
     ImageLoader.loadImages(images, main);
 }
 

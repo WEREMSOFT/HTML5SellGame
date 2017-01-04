@@ -5,6 +5,7 @@
 
 var Utils = require('./Utils');
 var Containter = require('./Container');
+var Text = require('./Text');
 
 var FPS = 15;
 
@@ -25,11 +26,14 @@ CanvasContainer.prototype.ctx = {};
 CanvasContainer.prototype.drawAll = function(){
     requestAnimationFrame(()=>{
         this.ctx.save();
-        // this.ctx.fillStyle = '#ffffff';
-        // this.ctx.fillRect(0,0,this.canvas.width, this.canvas.height);
-        this.processChilds((pChild)=>{
+        this.ctx.fillStyle = '#ffffff';
+        this.ctx.fillRect(0,0,this.canvas.width, this.canvas.height);
+        var that = this;
+        this.processChilds(function(pChild){
             if(pChild.image && pChild.visible)
-                this.ctx.drawImage(pChild.image, pChild.x, pChild.y);
+                that.ctx.drawImage(pChild.image, pChild.x, pChild.y);
+            else if(pChild instanceof Text)
+                that.drawText(pChild.x, pChild.y, pChild.text, pChild.color);
         });
         this.ctx.restore();
     });
@@ -37,7 +41,7 @@ CanvasContainer.prototype.drawAll = function(){
 };
 
 CanvasContainer.prototype.updateAll = function(){
-    this.processChilds((pChild)=>{
+    this.processChilds(function(pChild){
         if(pChild.update)
             pChild.update();
     });
@@ -57,7 +61,7 @@ CanvasContainer.prototype.drawLine = function(pX, pY, pXDest, pYDest){
 CanvasContainer.prototype.drawText = function (pX, pY, pText, pColor, pFont){
     this.ctx.fillStyle = pColor;
     this.ctx.font = pFont || '30px Arial';
-    this.ctx.fillText('Hello World', pX, pY);
+    this.ctx.fillText(pText, pX, pY);
 };
 
 CanvasContainer.prototype.update = function(){

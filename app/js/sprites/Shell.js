@@ -14,12 +14,13 @@ var Shell = function(pImage){
     this.phaseX = 0;
     this.phaseY = 0;
     this.setEventListeners();
+    this.hasCoin = false;
 };
 
 var increment = 0.3;
 Utils.extends(Shell, Sprite);
 
-
+Shell.prototype.childs = [];
 
 
 

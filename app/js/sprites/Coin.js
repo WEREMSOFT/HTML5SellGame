@@ -19,14 +19,8 @@ var Coin = function(pImage){
 var increment = 0.3;
 Utils.extends(Coin, Sprite);
 
-Coin.prototype.update = function(){
-    if(this.phaseX > Math.PI) return;
-    this.phaseX += increment;
-    this.phaseY += increment;
-    this.x = Math.sin(this.phaseX) * 100 + this.originalX;
-    this.y = Math.cos(this.phaseY) * 100 + this.originalY;
-    console.log(this.phaseX + '#' + this.phaseY);
-};
+Coin.prototype.childs = [];
+
 
 
 
