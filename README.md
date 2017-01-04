@@ -25,3 +25,4 @@ The player then has to guess correctly which container the ball is under in orde
 * Uses browser-sync to reload or inject changed files.
 * Code format check using eslint
 * NodeJS like include using Browserify
+* User JSDoc to generate detailed documentation. See `docs/gen` folder.
