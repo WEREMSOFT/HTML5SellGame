@@ -3,7 +3,11 @@
  */
 var Utils = require('../core/Utils');
 var Sprite = require('../core/Sprite');
-
+/**
+ * the coin the user needs to look for
+ * @param pImage the coin image
+ * @constructor
+ */
 var Coin = function(pImage){
     this.x = 0;
     this.y = 0;
@@ -16,7 +20,6 @@ var Coin = function(pImage){
     this.setEventListeners();
 };
 
-var increment = 0.3;
 Utils.extends(Coin, Sprite);
 
 Coin.prototype.childs = [];

@@ -3,7 +3,11 @@
  */
 var Utils = require('../core/Utils');
 var Sprite = require('../core/Sprite');
-
+/**
+ * the shell that covers the coin
+ * @param pImage the shell PNG image
+ * @constructor
+ */
 var Shell = function(pImage){
     this.x = 0;
     this.y = 0;
