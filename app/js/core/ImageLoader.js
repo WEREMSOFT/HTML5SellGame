@@ -2,7 +2,11 @@
  * Created by pabloweremczuk on 1/1/17.
  */
 'use strict';
-
+/**
+ * Load a bunch of images asinchronically
+ * Calls the callback when finish load the images. We don' use events since is a static class
+ * @type {{loadImages: ImageLoader.loadImages}}
+ */
 var ImageLoader = {
     loadImages: function (sources, callback) {
         var images = {};

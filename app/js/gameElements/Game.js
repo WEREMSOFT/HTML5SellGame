@@ -13,15 +13,18 @@ var Coin = require('./../sprites/Coin');
 var Shell = require('./../sprites/Shell');
 var Tween = require('./../core/Tween');
 var Text = require('./../core/Text');
-
+/**
+ * The main class of the game. Handles user interaction
+ * @param canvas The canvas, not the DOM, but the CanvasContainer object
+ * @param imageResources all the image resources you need to create
+ * @constructor
+ */
 var Game = function (canvas, imageResources) {
     // Game States
     this.STATE_IDLE = 0;
     this.STATE_SHUFFLE = 1;
     this.STATE_WAIT_FOR_SELECTION = 2;
-    this.STATE_WIN = 3;
-    this.STATE_LOOSE = 4;
-    this.STATE_SHOW_COIN = 5;
+    this.STATE_SHOW_COIN = 3;
     // Slot positions
     this.slots = [];
 
@@ -42,19 +45,45 @@ var Game = function (canvas, imageResources) {
     for (let i = 0; i < this.shells.length; i++) {
         this.addChild(this.shells[i]);
     }
+    this.winLooseText = new Text('', 'red');
+    this.winLooseText.x = 350;
+    this.winLooseText.y = 200;
+    this.addChild(this.winLooseText);
     this.setEventListeners();
     this.passToStateIdle();
 };
 
 Utils.extends(Game, Container);
+// ##############################
+// ---Main Loop Handler
+// ##############################
+Game.prototype.update = function () {
+    switch (this.state) {
+        case this.STATE_IDLE:
+            this.processStateIdle();
+            break;
+        case this.STATE_SHUFFLE:
+            this.processStateShuffle();
+            break;
+        case this.STATE_WAIT_FOR_SELECTION:
+            this.processStateWaitForSelection();
+            break;
+    }
+    this.mouseJustPressed = false;
+};
 
+
+// ##############################
 // ---State Transition Handlers
+// ##############################
+
 Game.prototype.passToStateIdle = function () {
     this.state = this.STATE_IDLE;
 };
 
 Game.prototype.passToStatShuffle = function () {
     if(this.state == this.STATE_SHUFFLE) return;
+    this.winLooseText.text = '';
     this.state = this.STATE_SHUFFLE;
     // The shufles formula gives me a integer between 2 and 8
     this.shufles = 2 + Math.round(Math.random() * 8);
@@ -70,12 +99,11 @@ Game.prototype.performShuffle = function () {
         tween.addEventListener('TweenEnded', (e) => {
             tweensEnded++;
             if(tweensEnded == this.shells.length){
-                console.log('=========================================');
                 this.shufles--;
                 if (this.shufles != 0)
                     this.performShuffle();
                 else
-                    e.customTarget.parent.passToStateIdle();
+                    e.customTarget.parent.passToStateWaitForSelection();
             }
         });
     }
@@ -101,16 +129,47 @@ Game.prototype.passToStateShowCoin = function () {
     this.moveShellUp();
 };
 
-// ---State handlers
-Game.prototype.processStateShuffle = function () {
+// ##############################
+// ---State process handlers
+// ##############################
 
+Game.prototype.processStateShuffle = function () {
+    // nothing to do here
 };
 
 Game.prototype.processStateShowCoin = function(){
-
+    // nothing to do here
 };
 
+Game.prototype.processStateIdle = function () {
+    if(this.mouseJustPressed){
+        this.passToStateShowCoin();
+    }
+};
+
+Game.prototype.processStateWaitForSelection = function () {
+    if(this.mouseJustPressed){
+        // check if the mouse was clicked inside the coin holder
+        var mouseCoordinates = {x: this.mouseInformation.clientX, y: this.mouseInformation.clientY};
+
+        if(this.cointHolder.hitTest(mouseCoordinates)){
+            this.winLooseText.color = 'green';
+            this.winLooseText.text = 'YOU WIN!!!';
+            // if the player wins, we speed up a little.
+            this.canvas.FPS++;
+        }else{
+            this.winLooseText.color = 'red';
+            this.winLooseText.text = 'YOU LOOSE!!!';
+        }
+
+        this.passToStateShowCoin();
+    }
+};
+
+// ##############################
 // --Methods that show where is the coin
+// ##############################
+
 Game.prototype.moveShellUp = function () {
     this.coin.visible = true;
     var tween = new Tween(this.cointHolder, 'y', -100);
@@ -137,28 +196,15 @@ Game.prototype.onAddedToParent = function (e) {
         that.mouseHandler(e);
     }, false);
 };
-// ---Main Loop Handler
-Game.prototype.update = function () {
-    switch (this.state) {
-        case this.STATE_IDLE:
-            this.processStateIdle();
-            break;
-        case this.STATE_SHUFFLE:
-            this.processStateShuffle();
-            break;
-    }
-};
 
+
+// ##############################
 // Mouse Handler:  We need to handle the mouse events at canvas level, because the sprites don't triggers events.
-Game.prototype.mouseHandler = function (e) {
-    var text = new Text('YOU WIN(or not, I\' not sure)', 'red');
-    text.x = 100;
-    text.y = 100;
-    this.addChild(text);
-    this.passToStateShowCoin();
-};
+// ##############################
 
-Game.prototype.processStateIdle = function () {
+Game.prototype.mouseHandler = function (e) {
+    this.mouseInformation = e;
+    this.mouseJustPressed = true;
 };
 
 Game.prototype.createShells = function () {
@@ -169,10 +215,10 @@ Game.prototype.createShells = function () {
         this.shells[i].y = 100;
     }
 };
+
 // Randomizes incrementally the slots array.
 Game.prototype.shuffleSlotMatrix = function () {
     var shufleCase = Math.round(Math.random() * 3);
-    console.log('shuffle' + shufleCase);
     switch(shufleCase){
         case 0:
             this.slots.unshift(this.slots.pop());

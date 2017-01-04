@@ -2,6 +2,10 @@
  * Created by pabloweremczuk on 12/30/16.
  */
 'use strict';
+/**
+ * Handles inheritance process
+ * @type {{extends: Utils.extends}}
+ */
 
 var Utils = {
     extends: function(childClass, parentClass){

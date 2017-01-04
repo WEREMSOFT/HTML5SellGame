@@ -4,7 +4,8 @@ var gulp = require('gulp'),
     watch = require('watch'),
     browserSync = require('browser-sync'),
     reload = browserSync.reload,
-    eslint = require('gulp-eslint');
+    eslint = require('gulp-eslint'),
+    jsdoc = require('gulp-jsdoc3');
 
 gulp.task('html', function(){
     gulp.src('./app/*.html')
@@ -37,6 +38,12 @@ gulp.task('lint', () => {
         .pipe(eslint())
         .pipe(eslint.format())
         .pipe(eslint.failAfterError());
+});
+
+
+gulp.task('doc', function (cb) {
+    gulp.src(['README.md', './app/js/**/*.js'], {read: false})
+        .pipe(jsdoc(cb));
 });
 
 

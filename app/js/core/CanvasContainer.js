@@ -7,13 +7,15 @@ var Utils = require('./Utils');
 var Containter = require('./Container');
 var Text = require('./Text');
 
-var FPS = 15;
+
 
 function CanvasContainer(pCanvas){
     this.canvas = pCanvas;
     this.ctx = this.canvas.getContext('2d');
     this.childs = [];
     this.parentClass.call(this);
+    // start with a lowerFPS
+    this.FPS = 15;
 }
 
 Utils.extends(CanvasContainer, Containter);
@@ -73,7 +75,7 @@ CanvasContainer.prototype.startMainLoop = function(){
     setInterval(() => {
         this.drawAll();
         this.updateAll();
-    }, 1000 / FPS);
+    }, 1000 / this.FPS);
 };
 
 

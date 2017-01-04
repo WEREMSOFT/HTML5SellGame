@@ -1,7 +1,14 @@
 # HTML5SellGame
 Just an experiment with HTML5Canvas.
 
-#How The Game Works
+### Getting up and running
+
+1. Clone this repo from `https://github.com/WEREMSOFT/HTML5SellGame.git`
+2. Run `npm install` from the root directory
+3. Run `gulp`
+4. Your browser will automatically be opened and directed to the browser-sync proxy address
+
+###How The Game Works
 
 The Shell Game, involves a flat surface, a row of three small containers and a ball small enough to fit underneath each of them.
 
@@ -11,7 +18,7 @@ placed under one of the containers before the order of the containers is repeate
 
 The player then has to guess correctly which container the ball is under in order to win, otherwise they lose.
 
-## Highlights
+### Highlights
 * All code writen by myself except by node_modules
 * Uses Gulp for build tasks
 * Uses watch to re-run scripts if a file changes.
